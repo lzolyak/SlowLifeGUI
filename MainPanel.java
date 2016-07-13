@@ -32,17 +32,7 @@ public class MainPanel extends JPanel {
     }
 
     private int convertToInt(int x) {
-	int c = 0;
-	String padding = "0";
-	while (c < _r) {
-	    String l = new String("0");
-	    padding += l;
-	    c++;
-	}
-	
-	String n = padding + String.valueOf(x);
-	int q = Integer.parseInt(n);
-	return q;
+    	return x;
     }
     
     private int getNumNeighbors(int x, int y) {
@@ -126,13 +116,7 @@ public class MainPanel extends JPanel {
      */
     
     public void backup() {
-	_backupCells = new Cell[_size][_size];
-	for (int j = 0; j < _size; j++) {
-	    for (int k = 0; k < _size; k++) {
-		_backupCells[j][k] = new Cell();
-		_backupCells[j][k].setAlive(_cells[j][k].getAlive());
-	    }
-	}
+	_backupCells = Arrays.copyOf(_cells, _size);
     }
 
     /**
@@ -220,6 +204,21 @@ public class MainPanel extends JPanel {
      */
 
     public void runContinuous() {
+	_running = true;
+	while (_running) {
+	    System.out.println("Running...");
+	    backup();
+	    calculateNextIteration();
+	}
+    }
+    
+    /**
+     * Run the system continuously.
+     * old version of this method
+     * left here for testing purposes
+     */
+
+    public void runContinuous_OLD() {
 	_running = true;
 	while (_running) {
 	    System.out.println("Running...");
